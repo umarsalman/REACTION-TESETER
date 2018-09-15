@@ -1,0 +1,108 @@
+<!doctype html>
+<html>
+	<head>
+	    <title>Reaction Tester</title>
+		<style>
+			body{
+			font-family:cursive;
+			margin:0 auto;
+			background-color:black;
+			}
+		
+			#shape{
+				width:200px;
+				height:200px;
+				background-color:blue;
+				position:relative;
+			}
+			#main{
+				margin-left:500px;
+				color:white;
+			}
+			#time{
+				
+				font-weight:bold;
+			}
+			#avgTime{
+				margin-left:317px;
+				
+			}
+			#bestTime{
+				font-size:20px;
+				margin-left:340px;
+		    }
+			#bt{
+				font-size:20px;
+			}
+			
+			
+		</style>
+	</head>
+	<body>
+		<div id="main">
+			<h1 >Reaction Tester<span id="bestTime">Best Time:</span><span id="bt"></span></h1>
+			<p>Click on the figure as soon as you can<span id="avgTime">Average Time:</span><span id="at"></span></p>
+			<p id="tilt">TIME:<span id="time"></span></p>
+		</div>
+		<div id="shape"></div>	
+		
+		<script>
+			var startTime = new Date().getTime();
+			var bt=100000; //best time
+			var at=0; //average time
+			var i=1;
+			var rad=0;
+			
+			function getRandomColor() {
+			  var letters = '0123456789ABCDEF';
+			  var color = '#';
+			  for (var i = 0; i < 6; i++) {
+				color += letters[Math.floor(Math.random() * 16)];
+			  }
+			  return color;
+			}
+
+
+			
+			
+			function makeShapeAppear(){
+				var wid=(Math.random()+.4)*180;
+				var top=Math.random()*300;
+				var left=Math.random()*1000;
+				var radius=Math.random();
+				if (radius >.5)
+				{
+					rad=50;
+				}
+				else
+				{
+					rad=0;
+				}
+				document.getElementById("shape").style.width=wid+"px";
+				document.getElementById("shape").style.height=wid+"px";
+				document.getElementById("shape").style.borderRadius=rad+"%";
+				document.getElementById("shape").style.backgroundColor=getRandomColor();
+				document.getElementById("shape").style.top=top+"px";
+				document.getElementById("shape").style.left=left+"px";
+				document.getElementById("shape").style.display="block";
+				 startTime = new Date().getTime();
+			}
+			
+			document.getElementById("shape").onclick=function(){
+				document.getElementById("shape").style.display="none";
+				var endTime = new Date().getTime();
+				var timeDifference=(endTime-startTime)/1000;
+				if (timeDifference < bt){
+					bt=timeDifference;
+				}
+				at=at+timeDifference;
+				document.getElementById("time").innerHTML=" "+timeDifference+"s";
+				document.getElementById("bt").innerHTML=" "+bt+"s";
+				document.getElementById("at").innerHTML=" "+(at/i).toFixed(3)+"s";
+				setTimeout(makeShapeAppear,(Math.random()+.2)*1000);
+				i++;
+			}
+		
+		</script>
+	</body>
+</html>
